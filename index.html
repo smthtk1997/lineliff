@@ -79,9 +79,9 @@
         </table>
 
         <button id="test">สมัครสมาชิก</button>
-        <div id="toggle">
+        <div id="toggle" style="display: none">
             <form action="#">
-                <img src="" alt="">
+                <img id="imgTest" src="" alt="">
                 <input type="text" id="name">
                 <input type="text" id="message">
             </form>
@@ -103,12 +103,12 @@
                     if (profilePictureDiv.firstElementChild) {
                         profilePictureDiv.removeChild(profilePictureDiv.firstElementChild);
                     }
-                    img.src = profile.pictureUrl;
-                    img.alt = "Profile Picture";
+                    img = $('#imgTest');
+                    img.attr('src',profile.pictureUrl);
 
                     $('#name').val(textContent = profile.displayName);
                     $('#message').val(profile.statusMessage);
-                    $('#toggle').toggle();
+                    $('#toggle').show();
                 }).catch(function (error) {
                     window.alert("Error getting profile: " + error);
                 });
