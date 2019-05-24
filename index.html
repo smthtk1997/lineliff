@@ -77,11 +77,44 @@
                 <td id="groupidfield"></td>
             </tr>
         </table>
+
+        <button id="test">สมัครสมาชิก</button>
+        <div id="toggle">
+            <form action="#">
+                <img src="" alt="">
+                <input type="text" id="name">
+                <input type="text" id="message">
+            </form>
+        </div>
+
     </div>
     
     <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!--    <script src="liff-starter.js"></script>-->
     <script>
+        $(document).ready(function () {
+            $('#test').on('click',function(){
+                liff.getProfile().then(function (profile) {
+                    document.getElementById('useridprofilefield').textContent = profile.userId;
+                    document.getElementById('displaynamefield').textContent = profile.displayName;
+
+                    const profilePictureDiv = document.getElementById('profilepicturediv');
+                    if (profilePictureDiv.firstElementChild) {
+                        profilePictureDiv.removeChild(profilePictureDiv.firstElementChild);
+                    }
+                    img.src = profile.pictureUrl;
+                    img.alt = "Profile Picture";
+
+                    $('#name').val(textContent = profile.displayName);
+                    $('#message').val(profile.statusMessage);
+                    $('#toggle').toggle();
+                }).catch(function (error) {
+                    window.alert("Error getting profile: " + error);
+                });
+            });
+
+        });
         window.onload = function (e) {
             liff.init(function (data) {
                 initializeApp(data);
@@ -89,6 +122,7 @@
         };
 
         function initializeApp(data) {
+
             document.getElementById('languagefield').textContent = data.language;
             document.getElementById('viewtypefield').textContent = data.context.viewType;
             document.getElementById('useridfield').textContent = data.context.userId;
